@@ -65,8 +65,15 @@ class EmailExportButton extends Component {
         deserialize: (v: string) => v
       });
 
+      // 兼容无内容/空响应
+      const text = typeof response === 'string' ? response : (response ?? '');
+      if (!text) {
+        app.alerts.show({ type: 'warning' }, '没有找到有效的邮箱地址');
+        return;
+      }
+
       // 创建 Blob 并下载
-      const blob = new Blob([response as string], { type: 'text/plain;charset=utf-8' });
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -78,7 +85,7 @@ class EmailExportButton extends Component {
       window.URL.revokeObjectURL(url);
 
       // 计算导出的邮箱数量
-      const lines = (response as string).trim().split('\n').filter((line: string) => line.trim());
+      const lines = text.trim().split('\n').filter((line: string) => line.trim());
       this.exportCount = lines.length;
       this.lastExportDate = new Date().toISOString();
 
