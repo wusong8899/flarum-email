@@ -65,7 +65,7 @@ class ExportValidEmailsController implements RequestHandlerInterface
                 if ($email === '') {
                     continue;
                 }
-                if ($validator->isValid($email, $validation)) {
+                if ($validator->isValid($email, $validation) && $this->passesStrictPattern($email)) {
                     $key = strtolower($email);
                     $emailsSet[$key] = $email; // keep original case once
                 } else {
@@ -113,5 +113,12 @@ class ExportValidEmailsController implements RequestHandlerInterface
         } catch (\Throwable $e) {
             return false;
         }
+    }
+
+    private function passesStrictPattern(string $email): bool
+    {
+        // Pragmatic pattern to exclude uncommon/suspicious characters like '/'
+        // Allows common characters in local part and ensures a basic domain+tld shape
+        return (bool) preg_match('/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $email);
     }
 }
