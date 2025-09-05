@@ -62,12 +62,13 @@ class EmailExportButton extends Component {
       const response = await m.request({
         method: 'GET',
         url: app.forum.attribute('apiUrl') + '/admin-email-export',
+        extract: (xhr: XMLHttpRequest) => xhr.responseText ?? '',
         deserialize: (v: string) => v
       });
 
       // 兼容无内容/空响应
-      const text = typeof response === 'string' ? response : (response ?? '');
-      if (!text) {
+      const text = typeof response === 'string' ? response : String(response ?? '');
+      if (text.trim().length === 0) {
         app.alerts.show({ type: 'warning' }, '没有找到有效的邮箱地址');
         return;
       }
@@ -85,7 +86,12 @@ class EmailExportButton extends Component {
       window.URL.revokeObjectURL(url);
 
       // 计算导出的邮箱数量
-      const lines = text.trim().split('\n').filter((line: string) => line.trim());
+      const normalized = text.replace(/\r\n/g, '\n');
+      const lines = normalized
+        .trim()
+        .split('\n')
+        .map((line: string) => line.trim())
+        .filter((line: string) => line && /@/.test(line) && /[^\s@]+@[^\s@]+\.[^\s@]+/.test(line));
       this.exportCount = lines.length;
       this.lastExportDate = new Date().toISOString();
 
