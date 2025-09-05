@@ -6,7 +6,6 @@ use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\DNSCheckValidation;
 use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
-use Flarum\Group\Group;
 use Flarum\Http\RequestUtil;
 use Flarum\User\UserRepository;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -27,7 +26,7 @@ class ExportValidEmailsController implements RequestHandlerInterface
         $actor = RequestUtil::getActor($request);
 
         // Admin-only
-        $actor->assertInGroup(Group::ADMINISTRATOR_ID);
+        $actor->assertAdmin();
 
         // Ensure Intl is available for DNSCheckValidation requirements
         if (!extension_loaded('intl')) {
