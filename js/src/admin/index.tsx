@@ -1,6 +1,5 @@
 import app from 'flarum/admin/app';
 import Button from 'flarum/common/components/Button';
-import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import Component from 'flarum/common/Component';
 import m, { Vnode } from 'mithril';
 
@@ -20,7 +19,7 @@ class EmailExportButton extends Component {
         const data = JSON.parse(lastExport);
         this.exportCount = data.count;
         this.lastExportDate = data.date;
-      } catch (e) {
+      } catch (_e) {
         // 忽略解析错误
       }
     }
@@ -60,10 +59,10 @@ class EmailExportButton extends Component {
 
     try {
       console.log('Making request to:', app.forum.attribute('apiUrl') + '/admin-email-export');
-      const response = await app.request({
+      const response = await m.request({
         method: 'GET',
         url: app.forum.attribute('apiUrl') + '/admin-email-export',
-        responseType: 'text'
+        deserialize: (v: string) => v
       });
 
       // 创建 Blob 并下载
@@ -126,7 +125,7 @@ class EmailExportButton extends Component {
         minute: '2-digit'
       };
       return date.toLocaleString('zh-CN', options);
-    } catch (e: any) {
+    } catch (_e: any) {
       return isoString;
     }
   }
