@@ -1,0 +1,4 @@
+(function(a,o){"use strict";a.initializers.add("wusong8899-email-common",()=>{console.log("[wusong8899/flarum-email] Hello, forum and admin!")}),o.initializers.add("wusong8899-email",()=>{o.extensionData.for("wusong8899-email").registerSetting(function(){const n=()=>{const t=o.forum.attribute("baseUrl")+"/api/admin-email-export",e=document.createElement("a");e.href=t,e.target="_blank",e.rel="noopener",e.click()};return m("div",{className:"Form-group"},m("label",null,"导出有效邮箱"),m("p",{className:"helpText"},"点击导出所有通过 RFC + DNS 检查的唯一邮箱，每行一个。"),m("button",{className:"Button Button--primary",type:"button",onClick:n},"导出邮箱"))})})})(flarum.core.compat["common/app"],flarum.core.compat["admin/app"]);
+//# sourceMappingURL=admin.js.map
+
+module.exports={};

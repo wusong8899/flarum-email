@@ -1,0 +1,41 @@
+{
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    "dist/**/*"
+  ],
+  "compilerOptions": {
+    "isolatedModules": true,
+    "declaration": true,
+    "module": "es2020",
+    "target": "es2020",
+
+    "skipLibCheck": true,
+    "allowUmdGlobalAccess": true,
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "jsx": "preserve",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+
+    "lib": ["dom", "es5", "es2015", "es2016", "es2017", "es2018", "es2019.array", "es2020"],
+
+    "paths": {
+      "flarum/*": [
+        "../vendor/flarum/core/js/dist-typings/*"
+      ],
+      "flarum/tags/*": [
+        "../vendor/flarum/tags/js/dist-typings/*"
+      ]
+    }
+  }
+}

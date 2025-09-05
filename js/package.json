@@ -1,0 +1,38 @@
+{
+  "name": "@wusong8899/flarum-email",
+  "private": true,
+  "version": "0.1.0",
+  "devDependencies": {
+    "@flarum/jest-config": "^1.0.1",
+    "@flarum/prettier-config": "^1.0.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "flarum-tsconfig": "^1.0.3",
+    "oxlint": "^1.14.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4",
+    "typescript-coverage-report": "^0.6.1",
+    "vite": "^7.1.4",
+    "vite-plugin-oxlint": "^1.4.0"
+  },
+  "scripts": {
+    "dev": "vite -c vite.config.admin.mts build --mode development && vite -c vite.config.forum.mts build --mode development",
+    "dev:admin": "vite -c vite.config.admin.mts build --mode development",
+    "dev:forum": "vite -c vite.config.forum.mts build --mode development",
+    "dev:watch": "vite -c vite.config.admin.mts build --watch --mode development && vite -c vite.config.forum.mts build --watch --mode development",
+    "build": "vite -c vite.config.admin.mts build --mode production && vite -c vite.config.forum.mts build --mode production",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "analyze": "cross-env ANALYZER=true yarn run build",
+    "format": "prettier --write src",
+    "format-check": "prettier --check src",
+    "clean-typings": "npx rimraf dist-typings && mkdir dist-typings",
+    "build-typings": "yarn run clean-typings && ([ -e src/@types ] && cp -r src/@types dist-typings/@types || true) && tsc && yarn run post-build-typings",
+    "post-build-typings": "find dist-typings -type f -name '*.d.ts' -print0 | xargs -0 sed -i 's,../src/@types,@types,g'",
+    "check-typings": "tsc --noEmit --emitDeclarationOnly false",
+    "check-typings-coverage": "typescript-coverage-report",
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
+  },
+  "prettier": "@flarum/prettier-config",
+  "type": "module"
+}

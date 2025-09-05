@@ -1,0 +1,34 @@
+{
+  // Oxlint configuration for the js/ workspace
+  // See .augment/rules/oxlint.md for policy
+  "ignorePatterns": [
+    "dist/**",
+    "node_modules/**",
+    "dist-typings/**"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error"
+  },
+  "rules": {
+    "no-console": "off",
+    "sort-imports": "off",
+    "sort-keys": "off",
+    "no-null": "off",
+    "no-undefined": "off"
+  },
+  "overrides": [
+    {
+      // TypeScript specific tweaks if needed later
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "plugins": [
+        "typescript"
+      ],
+      "rules": {}
+    }
+  ]
+}
