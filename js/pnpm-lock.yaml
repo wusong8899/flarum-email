@@ -14,12 +14,9 @@ importers:
       '@flarum/prettier-config':
         specifier: ^1.0.0
         version: 1.0.0
-      '@types/react':
-        specifier: ^19.1.12
-        version: 19.1.12
-      '@types/react-dom':
-        specifier: ^19.1.9
-        version: 19.1.9(@types/react@19.1.12)
+      '@types/mithril':
+        specifier: ^2.2.7
+        version: 2.2.7
       flarum-tsconfig:
         specifier: ^1.0.3
         version: 1.0.3
@@ -1215,14 +1212,6 @@ packages:
   '@types/node@24.3.1':
     resolution: {integrity: sha512-3vXmQDXy+woz+gnrTvuvNrPzekOi+Ds0ReMxw0LzBiK3a+1k0kQn9f2NWk+lgD4rJehFUmYy2gMhJ2ZI+7YP9g==}
 
-  '@types/react-dom@19.1.9':
-    resolution: {integrity: sha512-qXRuZaOsAdXKFyOhRBg6Lqqc0yay13vN7KrIg4L7N4aaHN68ma9OK3NE1BoDFgFOTfM7zg+3/8+2n8rLUH3OKQ==}
-    peerDependencies:
-      '@types/react': ^19.0.0
-
-  '@types/react@19.1.12':
-    resolution: {integrity: sha512-cMoR+FoAf/Jyq6+Df2/Z41jISvGZZ2eTlnsaJRptmZ76Caldwy1odD4xTr/gNV9VLj0AWgg/nmkevIyUfIIq5w==}
-
   '@types/sizzle@2.3.10':
     resolution: {integrity: sha512-TC0dmN0K8YcWEAEfiPi5gJP14eJe30TTGjkvek3iM/1NdHHsdCA/Td6GvNndMOo/iSnIsZ4HuuhrYPDAmbxzww==}
 
@@ -1579,9 +1568,6 @@ packages:
   cssstyle@2.3.0:
     resolution: {integrity: sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==}
     engines: {node: '>=8'}
-
-  csstype@3.1.3:
-    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
   data-urls@3.0.2:
     resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}
@@ -4411,14 +4397,6 @@ snapshots:
     dependencies:
       undici-types: 7.10.0
 
-  '@types/react-dom@19.1.9(@types/react@19.1.12)':
-    dependencies:
-      '@types/react': 19.1.12
-
-  '@types/react@19.1.12':
-    dependencies:
-      csstype: 3.1.3
-
   '@types/sizzle@2.3.10': {}
 
   '@types/stack-utils@2.0.3': {}
@@ -4834,8 +4812,6 @@ snapshots:
   cssstyle@2.3.0:
     dependencies:
       cssom: 0.3.8
-
-  csstype@3.1.3: {}
 
   data-urls@3.0.2:
     dependencies:

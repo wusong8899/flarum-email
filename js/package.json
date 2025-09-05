@@ -5,8 +5,7 @@
   "devDependencies": {
     "@flarum/jest-config": "^1.0.1",
     "@flarum/prettier-config": "^1.0.0",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
+    "@types/mithril": "^2.2.7",
     "flarum-tsconfig": "^1.0.3",
     "oxlint": "^1.14.0",
     "prettier": "^2.5.1",
