@@ -6,8 +6,8 @@
     "type": "flarum-extension",
     "license": "MIT",
     "require": {
-        "flarum/core": "^1.0",
-        "egulias/email-validator": "^4.0"
+        "flarum/core": "^1.8.10",
+        "egulias/email-validator": "^2.0"
     },
     "authors": [],
     "autoload": {
