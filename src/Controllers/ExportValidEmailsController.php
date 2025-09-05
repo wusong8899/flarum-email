@@ -71,7 +71,10 @@ class ExportValidEmailsController implements RequestHandlerInterface
         });
 
         if (empty($emailsSet)) {
-            return new EmptyResponse(204);
+            return new Response\JsonResponse([
+                'message' => 'No valid emails found',
+                'count' => 0
+            ], 204);
         }
 
         $date = date('Ymd');
