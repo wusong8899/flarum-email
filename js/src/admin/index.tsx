@@ -12,8 +12,8 @@ class EmailExportButton extends Component {
   private exportCount: number | null = null;
   private lastExportDate: string | null = null;
 
-  oninit() {
-    super.oninit();
+  oninit(vnode: Vnode) {
+    super.oninit(vnode);
     // 从 localStorage 恢复上次导出信息
     const lastExport = localStorage.getItem('wusong8899_email_last_export');
     if (lastExport) {
@@ -66,7 +66,7 @@ class EmailExportButton extends Component {
       });
 
       // 创建 Blob 并下载
-      const blob = new Blob([response], { type: 'text/plain;charset=utf-8' });
+      const blob = new Blob([response as string], { type: 'text/plain;charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -78,7 +78,7 @@ class EmailExportButton extends Component {
       window.URL.revokeObjectURL(url);
 
       // 计算导出的邮箱数量
-      const lines = response.trim().split('\n').filter((line: string) => line.trim());
+      const lines = (response as string).trim().split('\n').filter((line: string) => line.trim());
       this.exportCount = lines.length;
       this.lastExportDate = new Date().toISOString();
 
@@ -96,11 +96,11 @@ class EmailExportButton extends Component {
       console.error('Export failed:', error);
 
       let errorMessage = '导出失败，请稍后重试';
-      if (error.status === 403) {
+      if ((error as any).status === 403) {
         errorMessage = '权限不足，只有管理员可以导出邮箱';
-      } else if (error.status === 500) {
+      } else if ((error as any).status === 500) {
         errorMessage = '服务器错误，请检查 PHP Intl 扩展是否已安装';
-      } else if (error.status === 204) {
+      } else if ((error as any).status === 204) {
         errorMessage = '没有找到有效的邮箱地址';
       }
 
@@ -125,7 +125,7 @@ class EmailExportButton extends Component {
         minute: '2-digit'
       };
       return date.toLocaleString('zh-CN', options);
-    } catch (e) {
+    } catch (e: any) {
       return isoString;
     }
   }
