@@ -6,6 +6,7 @@ use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\DNSCheckValidation;
 use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
+use Carbon\Carbon;
 use Flarum\Http\RequestUtil;
 use Flarum\User\UserRepository;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -50,11 +51,13 @@ class ExportValidEmailsController implements RequestHandlerInterface
         $query->whereNotNull('email')
             ->where('email', '!=', '')
             ->where(function (Builder $q) {
-                if ($this->columnExists($q, 'is_suspended')) {
-                    $q->where('is_suspended', false);
+                if ($this->columnExists($q, 'suspended_until')) {
+                    $q->where(function (Builder $q2) {
+                        $q2->whereNull('suspended_until')
+                            ->orWhere('suspended_until', '<=', Carbon::now());
+                    });
                 }
-            })
-            ->whereNull('deleted_at');
+            });
 
         $query->chunk(200, function ($users) use (&$emailsSet, $validator, $validation) {
             foreach ($users as $user) {
@@ -65,6 +68,15 @@ class ExportValidEmailsController implements RequestHandlerInterface
                 if ($validator->isValid($email, $validation)) {
                     $key = strtolower($email);
                     $emailsSet[$key] = $email; // keep original case once
+                } else {
+                    if ((bool) $user->is_email_confirmed) {
+                        try {
+                            $user->is_email_confirmed = false;
+                            $user->save();
+                        } catch (\Throwable $e) {
+                            // ignore save failure to not block export
+                        }
+                    }
                 }
             }
         });
