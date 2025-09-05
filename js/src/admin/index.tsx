@@ -1,7 +1,6 @@
 import app from 'flarum/admin/app';
 import Button from 'flarum/common/components/Button';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
-import { showAlert } from 'flarum/common/helpers/alert';
 import Component from 'flarum/common/Component';
 import m, { Vnode } from 'mithril';
 
@@ -42,7 +41,7 @@ class EmailExportButton extends Component {
         <Button
           className="Button Button--primary"
           type="button"
-          onclick={this.handleExport.bind(this)}
+          onclick={() => this.handleExport()}
           disabled={this.loading}
           loading={this.loading}
         >
@@ -53,16 +52,18 @@ class EmailExportButton extends Component {
   }
 
   private async handleExport() {
+    console.log('Export button clicked');
     if (this.loading) return;
 
     this.loading = true;
     m.redraw();
 
     try {
+      console.log('Making request to:', app.forum.attribute('apiUrl') + '/admin-email-export');
       const response = await app.request({
         method: 'GET',
         url: app.forum.attribute('apiUrl') + '/admin-email-export',
-        raw: true
+        responseType: 'text'
       });
 
       // 创建 Blob 并下载
